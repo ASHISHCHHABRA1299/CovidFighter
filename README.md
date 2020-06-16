@@ -15,3 +15,8 @@ Note:
   4. Movement: Score=score+20 
   
      Collision: Score=Score-50
+     
+  SCREENSHOT
+  
+  ![Capture](https://user-images.githubusercontent.com/35839720/84774551-9df5b880-affb-11ea-82a3-087a376e66e0.PNG)
+   
