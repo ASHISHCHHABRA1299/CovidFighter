@@ -9,7 +9,7 @@ function load_images()
     player_image=new Image();
     player_image.src="Assets/superhero.png"
     gem_image = new Image;
-    gem_image.src = "Assets/gemm.png";
+    gem_image.src = "Assets/gem.png";
     
 }
 function init()
@@ -75,7 +75,16 @@ function init()
         player.moving=false;
     });
 }
-
+function isOverlap(rect1,rect2){
+    if (rect1.x < rect2.x + rect2.w &&
+   rect1.x + rect1.w > rect2.x &&
+   rect1.y < rect2.y + rect2.h &&
+   rect1.y + rect1.h > rect2.y) {
+    return true
+    }
+    
+    return false;   
+}
 function draw()
 {
     //clear the canvas area for the old frame
@@ -93,6 +102,10 @@ function draw()
        else
            pen.drawImage(enemy_image1,enemy[i].x,enemy[i].y,enemy[i].w,enemy[i].h);
     } 
+    
+    //print the score
+    pen.fillStyle = "white";
+    pen.fillText("Score "+player.health,20,20);
 }
 
 function update()
@@ -100,7 +113,28 @@ function update()
     //check if the player is moving
     if(player.moving==true)
     {
-        player.x+=player.speed;        
+        player.x+=player.speed; 
+        player.health += 20;
+    }
+    
+    //enemy and player collapse
+    for(let i=0;i<enemy.length;i++){
+        if(isOverlap(enemy[i],player)){
+            player.health -= 50;
+            if(player.health <0){
+                console.log(player.health);
+                game_over = true;
+                alert("Game Over" + player.health);
+                return;
+            }
+        }
+    }
+    //player and gem overlap
+    if(isOverlap(player,gem)){   
+        console.log("You Won");
+        alert("You Won!\nTotal Score:-" +player.health);
+        game_over = true;
+        return;
     }
     //move the box downwards
      //update each enemy by same logic
